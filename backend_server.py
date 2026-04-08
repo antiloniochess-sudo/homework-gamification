@@ -7,10 +7,13 @@ Uses Groq API for real AI generation (or mock data if no key provided)
 import os
 import json
 import requests
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 
-app = Flask(__name__)
+# Get the directory where the app is running
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+app = Flask(__name__, static_folder=BASE_DIR, static_url_path='')
 CORS(app)
 
 # Get Groq API key from environment variable
@@ -18,6 +21,16 @@ CORS(app)
 GROQ_API_KEY = os.environ.get('GROQ_API_KEY', '').strip()
 GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions'
 USE_REAL_API = bool(GROQ_API_KEY)
+
+@app.route('/')
+def serve_index():
+    """Serve the main index.html file"""
+    return send_from_directory(BASE_DIR, 'index.html')
+
+@app.route('/<path:filename>')
+def serve_static(filename):
+    """Serve static files (CSS, JS, etc.)"""
+    return send_from_directory(BASE_DIR, filename)
 
 @app.route('/api/health', methods=['GET'])
 def health():
