@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homework Gamification - MVP</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header with User Stats -->
+        <header class="header">
+            <h1>📚 Study Quest</h1>
+            <p style="margin-bottom: 20px; font-size: 0.95rem; opacity: 0.9;">Level up by completing homework</p>
+            <div class="user-stats">
+                <div class="stat-card">
+                    <div class="stat-label">Level</div>
+                    <div class="stat-value" id="levelDisplay">1</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Current XP</div>
+                    <div class="stat-value" id="xpDisplay">0/100</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Progress Bar -->
+        <section class="progress-section">
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <p class="progress-text" id="progressText">Level up at 100 XP</p>
+        </section>
+
+        <!-- Level Up Notification -->
+        <div class="notification" id="notification"></div>
+
+        <!-- AI Generator Section -->
+        <section class="generator-section">
+            <h2>🤖 AI Content Generator</h2>
+            <button id="aiGeneratorBtn" class="btn btn-primary btn-large">Open Generator</button>
+        </section>
+
+        <!-- AI Generator Modal -->
+        <div id="aiModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>🤖 AI Generator</h2>
+                    <button id="closeAiModal" class="modal-close">✕</button>
+                </div>
+                <div class="modal-body">
+                    <!-- Generator Form -->
+                    <div id="generatorForm" class="generator-form">
+                        <div class="form-group">
+                            <label>📚 Topic</label>
+                            <input 
+                                type="text" 
+                                id="topicInput" 
+                                placeholder="e.g., Photosynthesis, World War 2, Algebra"
+                                maxlength="100"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label>📝 Type</label>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="generationType" value="questions" checked>
+                                    <span>Questions</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="generationType" value="flashcards">
+                                    <span>Flashcards</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>📊 Difficulty</label>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="difficulty" value="easy">
+                                    <span>Easy</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="difficulty" value="normal" checked>
+                                    <span>Normal</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="difficulty" value="hard">
+                                    <span>Hard</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>🔢 How many? <span id="quantityValue">5</span></label>
+                            <input 
+                                type="range" 
+                                id="quantitySlider" 
+                                min="1" 
+                                max="10" 
+                                value="5"
+                                class="slider"
+                            >
+                            <div class="slider-labels">
+                                <span>1</span>
+                                <span>10</span>
+                            </div>
+                        </div>
+
+                        <button id="generateBtn" class="btn btn-primary btn-generate">Generate</button>
+                    </div>
+
+                    <!-- Loading Spinner -->
+                    <div id="loadingSpinner" class="loading-spinner" style="display: none;">
+                        <div class="spinner"></div>
+                        <p>Generating...</p>
+                    </div>
+
+                    <!-- Error Message -->
+                    <div id="errorMessage" class="error-message" style="display: none;"></div>
+
+                    <!-- Results Container -->
+                    <div id="resultsContainer" class="results-container" style="display: none;">
+                        <div id="resultsList" class="results-list"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Task List -->
+        <section class="tasks-section">
+            <h2>Your Topics Studied</h2>
+            <ul class="task-list" id="taskList">
+                <li class="empty-state">No topics studied yet. Start by generating AI content!</li>
+            </ul>
+        </section>
+
+        <!-- Stats Summary -->
+        <section class="stats-section">
+            <h2>Your Progress</h2>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-number" id="totalTasks">0</div>
+                    <div class="stat-name">Topics Studied</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" id="totalXpEarned">0</div>
+                    <div class="stat-name">Total XP</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reset Data -->
+        <footer class="footer">
+            <button id="resetBtn" class="btn btn-secondary btn-small">🔄 Reset Progress</button>
+            <p>Study Quest MVP • Test the gamification hypothesis</p>
+        </footer>
+    </div>
+
+    <script src="frontend_app.js"></script>
+</body>
+</html>
+
